@@ -82,11 +82,11 @@ $html = '
             <b>SEÑOR(A): </b> FREDDY EDDY HILARI MICHUA <br>
             <b>NIT/CI.: </b> 12345678 <br>
         ------------------------------------------------------------------------------ <br> 
-            <b>Cubículo de parqueo: </b> 10 <br>
+            <b>Cuviculo de parqueo: </b> 10 <br>
             <b>Fecha de ingreso: </b> 26/09/2022 <br>
             <b>Hora de ingreso: </b> 18:00               
         ------------------------------------------------------------------------------ <br>
-            <b>USUARIO: </b> FREDDY EDDY HILARI MICHUA
+            <b>USUARIO: </b> FREDDY EDDY HILARI MICHUA 
         </div>        
         
     </p>
