@@ -28,7 +28,7 @@ $fechaHora= date("Y-m-d h:i:s");
  echo 'success';
  //header('Location:' .$URL.'/');
  ?>
- <script>location.href = "principal.php";</script>
+ <script>location.href = "tickets/generar_ticket.php";</script>
 <?php
  }else{
  echo 'error al registrar a la base de datos';
