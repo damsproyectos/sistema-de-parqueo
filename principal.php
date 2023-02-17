@@ -157,8 +157,7 @@ include('layout/admin/datos_usuario_sesion.php');
                                                             <span aria-hidden="true">&times;</span>
                                                           </button>
                                                         </div>
-                                                        <div class="modal-body">
-                                                          
+                                                      <div class="modal-body">                                                          
                                                         <div class="form-group row">
                                                               <label for="staticEmail" class="col-sm-3 col-form-label">Placa: <span><b style="color: red">*</b></span></label>
                                                               <div class="col-sm-6">
@@ -311,9 +310,111 @@ include('layout/admin/datos_usuario_sesion.php');
                                       <div class="col">
                                     <center>
                                           <h2><?php echo $nro_espacio;?></h2>
-                                          <button class="btn btn-danger">
+                                          <button class="btn btn-danger" id="btn_ocupado<?php echo $id_map;?>" data-toggle="modal" data-target="#exampleModal<?php echo $id_map;?>">
                                               <img src="<?php echo $URL;?>/public/imagenes/auto1.png" width="60px"; height="85px"  alt="">
-                                          </button>                                          
+                                          </button>                                       
+                                          
+                                          <!--Inicio Consulta-->
+                                          <?php
+
+                                              $query_datos_cliente = $pdo->prepare("SELECT * FROM tb_tickets WHERE cuviculo = '$nro_espacio' AND estado = '1' ");                  
+                                              $query_datos_cliente->execute();
+                                              $datos_clientes = $query_datos_cliente->fetchAll(PDO::FETCH_ASSOC);
+                                              foreach($datos_clientes as $datos_cliente){                      
+                                              //$id_map = $datos_cliente['id_map'];
+                                              $id_ticket = $datos_cliente['id_ticket'];
+                                              $placa_auto = $datos_cliente['placa_auto'];
+                                              $nombre_cliente = $datos_cliente['nombre_cliente'];
+                                              $nit_ci = $datos_cliente['nit_ci'];
+                                              $cuviculo = $datos_cliente['cuviculo'];
+                                              $fecha_ingreso = $datos_cliente['fecha_ingreso'];
+                                              $hora_ingreso = $datos_cliente['hora_ingreso'];
+                                              $user_sesion = $datos_cliente['user_sesion'];
+                                              }
+                                          ?>
+                                          <!--Fin Consulta-->
+
+                                          <!-- Modal -->
+                                          <div class="modal fade" id="exampleModal<?php echo $id_map;?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                              <div class="modal-content">
+                                                <div class="modal-header">
+                                                  <h5 class="modal-title" id="exampleModalLabel">Datos del Cliente</h5>
+                                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                  </button>
+                                                </div>
+                                                <div class="modal-body">
+
+
+                                                <!--INICIO COPIADO-->
+                                                        <div class="form-group row">
+                                                              <label for="staticEmail" class="col-sm-4 col-form-label">Placa:</label>
+                                                              <div class="col-sm-8">
+                                                                 <input type="text" style="text-transform: uppercase" class="form-control" value="<?php echo $placa_auto;?>" id="placa_buscar<?php echo $id_map;?>" disabled>
+                                                              </div>                                                            
+                                                        </div>
+                                                        
+                                                        <!--div-- id="respuesta_buscar_cliente<!?php echo $id_map;?>">
+                                                                                                                         
+                                                        </!--div-->
+                                                        
+                                                        <!--inicio copiado2-->
+                                                        <div class="form-group row">
+                                                              <label for="staticEmail" class="col-sm-4 col-form-label">Nombre:</label>
+                                                           <div class="col-sm-8">
+                                                                <input type="text" class="form-control" value="<?php echo $nombre_cliente;?>" id="nombre_cliente<?php echo $id_map;?>" disabled>
+                                                           </div>
+                                                       </div>
+
+                                                        <div class="form-group row">
+                                                          <label for="staticEmail" class="col-sm-4 col-form-label">NIT/CI:</label>
+                                                            <div class="col-sm-8">
+                                                                <input type="text" class="form-control" value="<?php echo $nit_ci;?>" id="nit_ci<?php echo $id_map;?>" disabled>
+                                                            </div>
+                                                        </div>                                                
+                                                        <!--fin copiado2-->
+                                                        
+                                                        
+                                                                                                                
+                                                        <div class="form-group row">
+                                                              <label for="staticEmail" class="col-sm-4 col-form-label">Fecha de Ingreso:</label>
+                                                              <div class="col-sm-8">
+                                                                
+                                                                <input type="text" class="form-control" value="<?php echo $fecha_ingreso;?>" id="fecha_ingreso<?php echo $id_map;?>" disabled>
+                                                              </div>
+                                                        </div>
+
+                                                        <div class="form-group row">
+                                                              <label for="staticEmail" class="col-sm-4 col-form-label">Hora de Ingreso:</label>
+                                                              <div class="col-sm-8">
+                                                                 <input type="time" class="form-control" value="<?php echo $hora_ingreso;?>" id="hora_ingreso<?php echo $id_map;?>" disabled>
+                                                              </div>
+                                                        </div>
+
+                                                        <div class="form-group row">
+                                                              <label for="staticEmail" class="col-sm-4 col-form-label">Cuviculo:</label>
+                                                              <div class="col-sm-8">
+                                                                  <input type="text" class="form-control" value="<?php echo $cuviculo;?>" id="cuviculo<?php echo $id_map;?>" disabled>
+                                                              </div>
+                                                        </div>      
+                                                        <!--FIN COPIADO-->              
+
+
+                                                </div>
+                                                <div class="modal-footer">
+                                                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                                  <button type="button" class="btn btn-primary">Volver a Imprimir</button>
+                                                  <button type="button" class="btn btn-danger">Facturar</button>
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </div>
+                                          <script>
+                                              $('#btn_ocupado<?php echo $id_map;?>').click(function () {
+                                                  //alert("mostrando datos");
+                                              });
+                                          </script>                                          
                                           <p><?php echo $estado_espacio;?></p>
                                     </center>
                                 </div>

@@ -1,6 +1,8 @@
 <?php
 include('../app/config.php');
 
+ $placa = $_GET['placa'];
+ $placa = strtoupper($placa);//convierte todo a mayúscula
  $nombre_cliente = $_GET['nombre_cliente'];
  $nit_ci = $_GET['nit_ci'];
  $cuviculo = $_GET['cuviculo'];
@@ -12,9 +14,10 @@ include('../app/config.php');
 $fechaHora= date("Y-m-d h:i:s");
  
  $sentencia = $pdo->prepare('INSERT INTO tb_tickets
- (nombre_cliente,nit_ci,cuviculo,fecha_ingreso,hora_ingreso,user_sesion, fyh_creacion, estado)
- VALUES (:nombre_cliente,:nit_ci,:cuviculo,:fecha_ingreso,:hora_ingreso,:user_sesion,:fyh_creacion,:estado)');
+ (placa_auto,nombre_cliente,nit_ci,cuviculo,fecha_ingreso,hora_ingreso,user_sesion, fyh_creacion, estado)
+ VALUES (:placa_auto,:nombre_cliente,:nit_ci,:cuviculo,:fecha_ingreso,:hora_ingreso,:user_sesion,:fyh_creacion,:estado)');
  
+ $sentencia->bindParam(':placa_auto',$placa);
  $sentencia->bindParam(':nombre_cliente',$nombre_cliente);
  $sentencia->bindParam(':nit_ci',$nit_ci);
  $sentencia->bindParam(':cuviculo',$cuviculo);
