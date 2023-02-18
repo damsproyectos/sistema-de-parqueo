@@ -137,13 +137,14 @@ include('layout/admin/datos_usuario_sesion.php');
                                     $id_map = $mapeo['id_map'];
                                     $nro_espacio = $mapeo['nro_espacio'];
                                     $estado_espacio = $mapeo['estado_espacio'];                      
-                                    //$contador = $contador + 1;  
+                                    //$contador = $contador + 1;
+
                                     if($estado_espacio == "LIBRE") { ?>
                                        <div class="col">
                                           <center>
                                               <h2><?php echo $nro_espacio;?></h2> 
 
-                                              <button class="btn btn-success" style="width: 100%; height: 100px"          data-toggle="modal" data-target="#modal<?php echo $id_map;?>">
+                                              <button class="btn btn-success" style="width: 100%; height: 100px" data-toggle="modal" data-target="#modal<?php echo $id_map;?>">
                                                   <p><?php echo $estado_espacio;?></p>
                                               </button> 
                                               
@@ -403,18 +404,14 @@ include('layout/admin/datos_usuario_sesion.php');
 
                                                 </div>
                                                 <div class="modal-footer">
-                                                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                                                  <button type="button" class="btn btn-primary">Volver a Imprimir</button>
-                                                  <button type="button" class="btn btn-danger">Facturar</button>
+                                                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button>                                                  
+                                                  <a href="tickets/controller_cancelar_ticket.php?id=<?php echo $id_ticket;?>&&cuviculo=<?php echo $cuviculo;?>" class="btn btn-danger">Cancelar Ticket</a>
+                                                  <a href="tickets/reimprimir_ticket.php?id=<?php echo $id_ticket;?>" class="btn btn-primary">Volver a Imprimir</a> 
+                                                  <button type="button" class="btn btn-success">Facturar</button>
                                                 </div>
                                               </div>
                                             </div>
-                                          </div>
-                                          <script>
-                                              $('#btn_ocupado<?php echo $id_map;?>').click(function () {
-                                                  //alert("mostrando datos");
-                                              });
-                                          </script>                                          
+                                          </div> <!--fin div MODAL principal-->                                                                                    
                                           <p><?php echo $estado_espacio;?></p>
                                     </center>
                                 </div>
