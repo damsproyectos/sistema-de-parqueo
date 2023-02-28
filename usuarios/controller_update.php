@@ -9,6 +9,7 @@ $id_user = $_GET['id_user'];
 //echo $nombres."-".$email."-".$password_user;
 date_default_timezone_set("America/Bogota");
 $fechaHora= date("Y-m-d h:i:s");
+
 $sentencia = $pdo->prepare("UPDATE tb_usuarios SET
 nombres = :nombres,
 email = :email,
