@@ -107,9 +107,9 @@ $html = '
                 <p style="text-align: left"><b>Son:</b> Diez 00/100 Pesos</p>
                 <br>
                 ------------------------------------------------------------------------------ <br>
-                 <b>USUARIO: </b> FREDDY EDDY HILARI MICHUA               
+                 <b>USUARIO: </b> FREDDY EDDY HILARI MICHUA <br><br><br><br><br><br><br>               
             
-                 <p style="text-align: center"> <img src="http://t3.gstatic.com/licensed-image?q=tbn:ANd9GcSh-wrQu254qFaRcoYktJ5QmUhmuUedlbeMaQeaozAVD4lh4ICsGdBNubZ8UlMvWjKC"  width="100px" alt="" ></p>
+                 <p style="text-align: center"> </p>
                  <p style="text-align: center">"ESTA FACTURA CONTRIBUYE AL DESARROLLO DEL PAÍS, EL USO ILÍCITO DE ÉSTA SERÁ SANCIONADO DE ACUERDO A LA LEY"</p>
                  <p style="text-align: center"><b>GRACIAS POR SU PREFERENCIA</b></p>     
         </div>        
@@ -120,9 +120,27 @@ $html = '
 
 
 
+
 // output the HTML content
 $pdf->writeHTML($html, true, false, true, false, '');
 
+
+// set style for barcode
+$style = array(
+    'border' => 0,
+    'vpadding' => '3',
+    'hpadding' => '3',
+    'fgcolor' => array(0,0,0),
+    'bgcolor' => false, //array(255,255,255)
+    'module_width' => 1, // width of a single module in points
+    'module_height' => 1 // height of a single module in points
+);
+
+//QRCODE,L : QR-CODE Low error correction
+//$pdf->write2DBarcode($QR, type: 'QRCODE,L',  x: 20, y: 30, w: 50, h: 50, $style, 'N');
+$QR = 'Factura realizada por el sistema de parqueo HILARI WEB, al cliente Freddy hilari con NIT: 8377783877783 con el vehículo con número placa 3983FREDO y esta factura se generó en 21 de octubre de 2022 a hr: 18:00';
+$pdf->write2DBarcode('www.tcpdf.org', 'QRCODE,L', 25, 100, 30, 30, $style, 'N');
+$pdf->Text(20, 25, 'QRCODE L');
 
 
 
@@ -133,3 +151,6 @@ $pdf->Output('example_002.pdf', 'I');
 //============================================================+
 // END OF FILE
 //============================================================+
+
+
+//<img src="http://t3.gstatic.com/licensed-image?q=tbn:ANd9GcSh-wrQu254qFaRcoYktJ5QmUhmuUedlbeMaQeaozAVD4lh4ICsGdBNubZ8UlMvWjKC"  width="100px" alt="">
