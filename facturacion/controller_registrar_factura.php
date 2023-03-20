@@ -172,6 +172,26 @@ $sentencia->bindParam('estado',$estado_del_registro);
 if($sentencia->execute()){
     echo 'success';
 //header('Location:' .$URL.'/');
+
+//////////////////////////ACTUALIZAR ESTADO LIBRE/////////////////////////////////////////////////////////
+$estado_espacio = "LIBRE";
+
+date_default_timezone_set("America/Bogota");
+$fechaHora= date("Y-m-d h:i:s");
+
+$sentencia = $pdo->prepare("UPDATE tb_mapeos SET
+estado_espacio = :estado_espacio,
+fyh_actualizacion = :fyh_actualizacion
+WHERE nro_espacio = :nro_espacio");
+
+$sentencia->bindParam(':estado_espacio', $estado_espacio);
+$sentencia->bindParam(':fyh_actualizacion', $fechaHora);
+$sentencia->bindParam(':nro_espacio', $cuviculo);
+
+//if($sentencia->execute()) {
+$sentencia->execute();    
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 ?>
 
     <script>location.href = "facturacion/factura.php";</script>
