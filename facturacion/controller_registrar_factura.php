@@ -42,22 +42,46 @@ $fecha_factura = $departamento_ciudad.", ".$dia." de ".$mes." de ".$ano;
 $fecha_ingreso = $_GET['fecha_ingreso'];
 $hora_ingreso = $_GET['hora_ingreso'];
 //echo $fecha_salida = date('d/m/Y');
-$fecha_salida = date('d/m/Y');
+//$fecha_salida = date('d/m/Y');
+$fecha_salida = date('Y-m-d');
 $fecha_salida_para_calcular = date('Y/m/d');
 //echo $hora_salida = date('H:i');
 $hora_salida = date('H:i');
 
 
-////////////Algoritmo para calcular los DÍAS del carro en el Parqueadero//////////////////
+///////////NUEVA CALCULO DE TIEMPO SIN IMPORTAR HORAS NEGATIVAS ENTRE EL TIEMPO DE ANTRADA Y SALIDA/////////
+//echo $fecha_hora_ingreso = $fecha_ingreso." ".$hora_ingreso;
+$fecha_hora_ingreso = $fecha_ingreso." ".$hora_ingreso;
+$fecha_hora_salida = $fecha_salida." ".$hora_salida;
+
+/*$fecha1 = new DateTime('2023-03-16 18:42');
+$fecha2 = new DateTime('2023-03-20 08:42');
+$diff = $fecha1->diff($fecha2);*/
+
+//echo $diff->days;
+//echo $diff->h;
+//echo $diff->days." dias con ".$diff->h." horas";
+
+$fecha_hora_ingreso = new DateTime($fecha_hora_ingreso);
+$fecha_hora_salida = new DateTime($fecha_hora_salida);
+$diff = $fecha_hora_ingreso->diff($fecha_hora_salida);
+
+//echo $tiempo = $diff->days." dias con ".$diff->h." horas con ".$diff->i." minutos";
+$tiempo = $diff->days." dias con ".$diff->h." horas con ".$diff->i." minutos";
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+/*///////////Algoritmo para calcular los DÍAS del carro en el Parqueadero//////////////////
 $dato1 = new DateTime($fecha_ingreso);
 $dato2 = new DateTime($fecha_salida_para_calcular);
 $dias_calculado = $dato1->diff($dato2);
 $dias_calculado->days;
 //echo $dias_calculado->days.' días ';
-////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////*/
 
 
-////////////Algoritmo para calcular Tiempo del carro en el Parqueadero//////////////////
+/*///////////Algoritmo para calcular Tiempo del carro en el Parqueadero//////////////////
 /////la propiedad strtotime me permite traer la hora.  "c"= cambio
 $c_hora_ingreso = strtotime($hora_ingreso);
 $c_hora_salida = strtotime($hora_salida);
@@ -81,7 +105,7 @@ if (($dias_calculado->days)=="0") {
     $tiempo =$dias_calculado->days. " días con " .$hora_calculado." horas con ".$minutos_calculado." minutos ";
 }
 //$tiempo =$dias_calculado->days. " días con " .$hora_calculado." horas con ".$minutos_calculado." minutos ";
-////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////*/
 
 
 $cuviculo = $_GET['cuviculo'];
@@ -90,7 +114,7 @@ $detalle = "Servicio de parqueo de ".$tiempo;
 
 
 /////////Calcula el precio del cliente en horas/////////////////
-$query_precios = $pdo->prepare("SELECT * FROM tb_precios WHERE cantidad = '$hora_calculado' AND detalle = 'horas' AND estado = '1' ");                  
+$query_precios = $pdo->prepare("SELECT * FROM tb_precios WHERE cantidad = '$diff->h' AND detalle = 'horas' AND estado = '1' ");                  
 $query_precios->execute();
 $datos_precios = $query_precios->fetchAll(PDO::FETCH_ASSOC);
 foreach($datos_precios as $datos_precio){             
@@ -98,14 +122,14 @@ foreach($datos_precios as $datos_precio){
     //echo $precio_hora = $datos_precio['precio'];
 }
 //echo $precio;
-//////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////
 //$precio = $precio;
 
 
 
 /////////Calcula el precio del cliente en DÍAS/////////////////
 $precio_dia = 0;
-$query_precios_dias = $pdo->prepare("SELECT * FROM tb_precios WHERE cantidad = '$dias_calculado->days' AND detalle = 'DIAS' AND estado = '1' ");                  
+$query_precios_dias = $pdo->prepare("SELECT * FROM tb_precios WHERE cantidad = '$diff->days' AND detalle = 'DIAS' AND estado = '1' ");                  
 $query_precios_dias->execute();
 $datos_precios_dias = $query_precios_dias->fetchAll(PDO::FETCH_ASSOC);
 foreach($datos_precios_dias as $datos_precios_dia){             
@@ -175,23 +199,29 @@ if($sentencia->execute()){
 
 //////////////////////////ACTUALIZAR ESTADO LIBRE/////////////////////////////////////////////////////////
 $estado_espacio = "LIBRE";
-
 date_default_timezone_set("America/Bogota");
 $fechaHora= date("Y-m-d h:i:s");
-
 $sentencia = $pdo->prepare("UPDATE tb_mapeos SET
 estado_espacio = :estado_espacio,
 fyh_actualizacion = :fyh_actualizacion
 WHERE nro_espacio = :nro_espacio");
-
 $sentencia->bindParam(':estado_espacio', $estado_espacio);
 $sentencia->bindParam(':fyh_actualizacion', $fechaHora);
 $sentencia->bindParam(':nro_espacio', $cuviculo);
-
 //if($sentencia->execute()) {
 $sentencia->execute();    
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+
+//////////////////////////ACTUALIZAR EN LA TABLA TICKET ESTADO LIBRE/////////////////////////////////////////////////////////
+$estado_espacio_ticket = "LIBRE";
+$sentencia_ticket = $pdo->prepare("UPDATE tb_tickets SET
+estado_ticket = :estado_ticket WHERE fecha_ingreso = :fecha_ingreso AND hora_ingreso = :hora_ingreso");
+$sentencia_ticket->bindParam(':estado_ticket', $estado_espacio_ticket);
+$sentencia_ticket->bindParam(':fecha_ingreso', $fecha_ingreso);
+$sentencia_ticket->bindParam(':hora_ingreso', $hora_ingreso);
+$sentencia_ticket->execute();    
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ?>
 
     <script>location.href = "facturacion/factura.php";</script>

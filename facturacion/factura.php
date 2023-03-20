@@ -142,8 +142,8 @@ $html = '
                         <td style="text-align: center"><b>'.$total.'</b></td>                      
                     </tr>               
                 </table>
-                <p style="text-align: right"><b>Monto Total:</b>'.$monto_total.'</p>                
-                <p style="text-align: left"><b>Son:</b>'.$monto_literal.'</p>
+                <p style="text-align: right"><b>Monto Total:</b>' .$monto_total.'</p>                
+                <p style="text-align: left"><b>Son:</b>' .$monto_literal.'</p>
                 <br>
                 ------------------------------------------------------------------------------ <br>
                  <b>USUARIO: </b>'.$user_sesion.'<br><br><br><br><br><br><br>               
