@@ -102,20 +102,57 @@
       <div class="container">          
               <h2>Listado de Usuarios</h2> 
               </br>
-              <table border="1" class="table table-bordered table-sm table-striped">
-                  <th><center>Nro<center></th>
-                  <th>Nombre de Usuario</th>
-                  <th>Email</th>
-                  <th><center>Acción</center></th>
-                  
-                  <?php
-                  $contador = 0;
-                  $query_usuario = $pdo->prepare("SELECT * FROM tb_usuarios WHERE estado = '1' ");
 
-                  //print_r($query_login);
-                  $query_usuario->execute();
-                  $usuarios = $query_usuario->fetchAll(PDO::FETCH_ASSOC);
-                  foreach($usuarios as $usuario){
+
+              <!-----------------LIBRERÍA DATATABLES_PAGINACIÓN----------------->  
+              <script>
+                  /*$(document).ready( function () {
+                        $('#table_id').DataTable();
+                    } );*/
+
+                    $(document).ready(function() {
+                        $('#table_id').DataTable( {
+                          "pageLength": 5,
+                          "language": {
+                              "emptyTable": "No hay informacion",
+                              "info": "Mostrando _START_ a _END_ de _TOTAL_ Usuarios",
+                              "infoEmpty": "Mostrando 0 a 0 de 0 Usuarios",
+                              "infoFiltered": "(filtrado de _MAX_ total Usuarios)",
+                              "infoPostfix": "",
+                              "thousands": ",",
+                              "lengthMenu": "Mostrar _MENU_ Usuarios",
+                              "loadingRecords": "Cargando...",
+                              "processing": "Procesando...",
+                              "search": "Buscador:",
+                              "zeroRecords": "sin resultados encontrados",
+                              "paginate": {
+                                "first": "Primero",
+                                "last": "ultimo",
+                                "next": "siguiente",
+                                "previous": "Anterior"
+                              }
+                            }
+                        });
+                    });
+              </script>       
+              <br>
+              <table id="table_id" border="1" class="table table-bordered table-sm table-striped">
+                  <thead>                      
+                    <th><center>Nro<center></th>
+                    <th>Nombre de Usuario</th>
+                    <th>Email</th>
+                    <th><center>Acción</center></th>
+                  </thead>
+                  
+                  <tbody>
+                        <?php
+                      $contador = 0;
+                      $query_usuario = $pdo->prepare("SELECT * FROM tb_usuarios WHERE estado = '1' ");
+
+                      //print_r($query_login);
+                      $query_usuario->execute();
+                      $usuarios = $query_usuario->fetchAll(PDO::FETCH_ASSOC);
+                      foreach($usuarios as $usuario){
                       //$id = $usuario['id'];
                       //echo $nombres = $usuario['nombres'];
                       $id = $usuario['id'];
@@ -125,21 +162,25 @@
                       //echo $email;
                       ?>
                       <tr>
-                      <td><center><?php echo $contador;?></center></td>
-                      <td><?php echo $nombres;?></td>
-                      <td><?php echo $email;?></td>
-                      <td>
+                          <td><center><?php echo $contador;?></center></td>
+                          <td><?php echo $nombres;?></td>
+                          <td><?php echo $email;?></td>
+                          <td>
                           <center>
                           <a href="update.php?id=<?php echo $id;?>" class="btn btn-success">Editar</a>
                           <a href="delete.php?id=<?php echo $id;?>"class="btn btn-danger">Borrar</a>
                           </center>
-                      </td>                      
+                          </td>                      
                       </tr>
-                      <?php
-                  }                  
-                  ?>
+                        <?php
+                      }                  
+                      ?>
+                  </tbody>
+                  
               </table>
-
+          <!-----------------LIBRERÍA DATATABLES----------------->    
+          
+          
       </div>
   </div>
   <!-- /.content-wrapper -->

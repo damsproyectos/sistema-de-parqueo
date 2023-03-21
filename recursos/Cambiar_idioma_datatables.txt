@@ -1,0 +1,25 @@
+$(document).ready(function() {
+
+					$('#tabla-1').DataTable( {
+					   "pageLength": 5,
+					   "language": {
+					       "emptyTable": "No hay informacion",
+						 "info": "Mostrando _START_ a _END_ de _TOTAL_ Productos",
+						 "infoEmpty": "Mostrando 0 a 0 de 0 Productos",
+						 "infofiltered": "(filtrado de _MAX_ total Productos)",
+						 "infoPostfix": "",
+						 "thousands": ",",
+						 "lengthMenu": "Mostrar _MENU_ Productos",
+						 "loadingRecords": "Cargando...",
+						 "processing": "Procesando...",
+						 "search": "Buscador",
+						 "zeroRecords": "sin resultados encontrados",
+						 "paginate": {
+							"first": "Primero",
+					            "last": "ultimo",
+							"next": "siguiente",
+							"previous": "Anterior"
+						 }
+					     }
+					  });
+					});
