@@ -22,8 +22,8 @@
     <div class="container-fluid">
            <!--LOGO BootStrap-->
     <a class="navbar-brand" href="#">
-      <img src="" alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
-      SISPARQUEO
+      <img src="<?php echo $URL;?>/public/imagenes/auto1.png" alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
+      PARQUEADERO DAMS
     </a>   
      <!--MENÚ NAVEGACIÓN BootStrap-->
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">

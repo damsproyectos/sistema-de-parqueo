@@ -6,6 +6,11 @@ session_start();
 
 $usuario_user = $_POST['usuario'];
 $password_user = $_POST['password_user'];
+$form_login = "";
+
+if($_POST['form_login']) {
+    $form_login = 'true';
+}
 
 //echo "ajax";
 //echo $usuario."-".$password_user;
@@ -24,12 +29,28 @@ foreach($usuarios as $usuario){
 }
 
 if(($usuario_user == $email_tabla) && ($password_user == $password_tabla)){
+    if($form_login=="") { ?>
+        <div class="alert alert-success" role="alert">
+             Usuario Correcto
+        </div>
+        <script>location.href = "principal.php";</script>
+
+        <?php
+    }else { ?>
+          <div class="alert alert-success" role="alert">
+             Usuario Correcto
+        </div>
+        <script>location.href = "../principal.php";</script>      
+
+        <?php
+    }
     //echo "Usuario correcto";
     ?>
-     <div class="alert alert-success" role="alert">
+     <!--div class="alert alert-success" role="alert">
              Usuario Correcto
-    </div>
+    </!--div>
     <script>location.href = "principal.php";</script>
+
     <?php
     $_SESSION['usuario_sesion'] = $email_tabla;
 }else{
